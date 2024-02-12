@@ -1,1 +1,2 @@
-snowflake-connector-python
+pip install urllib3==2.0.0
+pip install snowflake-connector-python
