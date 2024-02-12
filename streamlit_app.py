@@ -41,13 +41,17 @@ try:
       streamlit.dataframe(fruityvice_advice)
 except URLError as e:
    stramlit.error()
-   
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("select * from fruit_load_list")
-my_data_rows = my_cur.fetchall()
-streamlit.text("Hello from Snowflake:")
-streamlit.dataframe(my_data_rows)
+
+
+def load_fruit_list():
+   with my_cnx.cursor() as my_cur:
+      my_cur.execute("select * from fruit_load_list")
+      return my_cur.fetchall()
+
+if strealit.button('Get fruit list):
+   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+   my_data_rows = load_fruit_list()
+   streamlit.dataframe(my_data_rows)
 
 fruit_added = streamlit.text_input("What fruits you want to add ?")
 streamlit.write("Thanks for adding ",fruit_added)
